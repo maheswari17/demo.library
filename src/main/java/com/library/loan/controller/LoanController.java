@@ -23,7 +23,7 @@ public class LoanController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Loan> getLoan(@PathVariable Long id) {
+    public ResponseEntity<LoanDto> getLoan(@PathVariable Long id) {
         return new ResponseEntity<>(loanService.getLoan(id),HttpStatus.OK);
     }
 

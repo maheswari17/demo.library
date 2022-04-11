@@ -1,5 +1,4 @@
 package com.library.member.dto;
-import com.library.book.dto.BookDto;
 import lombok.Getter;
 import lombok.Setter;
 

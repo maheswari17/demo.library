@@ -7,6 +7,6 @@ import java.util.List;
 public interface LoanService {
     List<LoanDto> getAllMembersBook();
     LoanDto saveLoan(LoanDto loanDto);
-    Loan getLoan(Long id);
+    LoanDto getLoan(Long id);
     void deleteLoan(Long id);
 }

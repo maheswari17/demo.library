@@ -6,6 +6,7 @@ import com.library.book.repository.BookRepository;
 import com.library.exceptions.CustomNotFoundException.BookNotFoundException;
 import com.library.exceptions.CustomNotFoundException.LoanNotFoundException;
 import com.library.loan.model.Loan;
+import com.library.utils.DtoConverter;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,20 +27,20 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getAllBooks() {
-        return bookRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
+        return bookRepository.findAll().stream().map(DtoConverter::buildBookDto).collect(Collectors.toList());
     }
 
     @Override
     public BookDto addBook(BookDto bookDto) {
-        Book book= bookRepository.save(convertDtoToEntity(bookDto));
-        return convertEntityToDto(book);
+        Book book= bookRepository.save(DtoConverter.buildBook(bookDto));
+        return DtoConverter.buildBookDto(book);
     }
 
     @Override
     public BookDto getBook(long id) {
         Optional<Book> book = bookRepository.findById(id);
         if(book.isPresent()) {
-            return convertEntityToDto(book.get());
+            return DtoConverter.buildBookDto(book.get());
         }throw new BookNotFoundException("book details not found");
     }
 
@@ -52,23 +53,5 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    private BookDto convertEntityToDto(Book book)   {
-        BookDto bookDto = new BookDto();
-        bookDto.setBookId(book.getBookId());
-        bookDto.setBookTitle(book.getBookTitle());
-        bookDto.setAuthor(book.getAuthor());
-        bookDto.setEdition(book.getEdition());
-        bookDto.setPrice(book.getPrice());
-        return bookDto;
-    }
 
-    private Book convertDtoToEntity(BookDto bookDto)  {
-        Book book = new Book();
-        book.setBookId(bookDto.getBookId());
-        book.setBookTitle(bookDto.getBookTitle());
-        book.setAuthor(bookDto.getAuthor());
-        book.setEdition(bookDto.getEdition());
-        book.setPrice(bookDto.getPrice());
-        return book;
-    }
 }
