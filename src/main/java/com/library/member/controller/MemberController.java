@@ -15,7 +15,7 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<MemberDto> getAllMembers() {
         return memberService.getAllMembers();
     }
@@ -25,7 +25,7 @@ public class MemberController {
         return new ResponseEntity<>(memberService.getMember(id),HttpStatus.OK);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public MemberDto add(@RequestBody MemberDto memberDto) {
         return memberService.saveMember(memberDto);
     }

@@ -1,6 +1,5 @@
 package com.library.loan.controller;
 import com.library.loan.dto.LoanDto;
-import com.library.loan.model.Loan;
 import com.library.loan.service.LoanServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,7 @@ public class LoanController {
         this.loanService = loanService;
     }
 
-    @GetMapping("/member-books")
+    @GetMapping
     public List<LoanDto> getAllMemberBooks() {
         return loanService.getAllMembersBook();
     }
@@ -27,7 +26,7 @@ public class LoanController {
         return new ResponseEntity<>(loanService.getLoan(id),HttpStatus.OK);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public LoanDto saveLoan(@RequestBody LoanDto loanDto) {
         return loanService.saveLoan(loanDto);
     }

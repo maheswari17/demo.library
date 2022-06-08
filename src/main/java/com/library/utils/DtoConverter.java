@@ -1,5 +1,4 @@
 package com.library.utils;
-
 import com.library.book.dto.BookDto;
 import com.library.book.model.Book;
 import com.library.loan.dto.LoanDto;
@@ -56,9 +55,9 @@ public class DtoConverter {
         LoanDto loanDto = new LoanDto();
         loanDto.setBookDto(buildBookDto(loan.getBook()));
         loanDto.setMemberDto(buildMemberDto(loan.getMember()));
-       // loanDto.setMemberId(loan.getMemberId());
+        loanDto.setMemberId(loan.getMemberId());
         loanDto.setLoanId(loan.getLoanId());
-        //loanDto.setBookId(loan.getBookId());
+        loanDto.setBookId(loan.getBookId());
         loanDto.setIssueDate(loan.getIssueDate());
         loanDto.setReturnDate(loan.getReturnDate());
         return loanDto;

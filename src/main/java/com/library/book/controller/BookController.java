@@ -14,7 +14,7 @@ public class BookController {
         this.bookServiceable = bookServiceable;
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<BookDto> getAllBooks() {
         return bookServiceable.getAllBooks();
     }
@@ -24,12 +24,13 @@ public class BookController {
         return new ResponseEntity<>(bookServiceable.getBook(id), HttpStatus.OK);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public BookDto add(@RequestBody BookDto bookDto) {
         return bookServiceable.addBook(bookDto);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(reason = "book deleted",code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
         bookServiceable.deleteBook(id);
     }

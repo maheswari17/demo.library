@@ -6,6 +6,8 @@ import com.library.loan.model.Loan;
 import com.library.utils.DtoConverter;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,9 +16,11 @@ import java.util.stream.Collectors;
 public class LoanServiceImpl implements LoanService {
 
     LoanRepository loanRepository;
+    EntityManager entityManager;
 
-    public LoanServiceImpl(LoanRepository loanRepository) {
+    public LoanServiceImpl(LoanRepository loanRepository,EntityManager entityManager) {
         this.loanRepository = loanRepository;
+        this.entityManager=entityManager;
     }
 
     public List<LoanDto> getAllMembersBook() {
@@ -24,8 +28,11 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    @Transactional
     public LoanDto saveLoan(LoanDto loanDto) {
-        Loan loan= loanRepository.save(DtoConverter.buildLoan(loanDto));
+        Loan loan= loanRepository.saveAndFlush(DtoConverter.buildLoan(loanDto));
+        entityManager.refresh(loan);
+        System.out.println(loan);
         return DtoConverter.buildLoanDto(loan);
     }
 
@@ -35,7 +42,6 @@ public class LoanServiceImpl implements LoanService {
         if(loan.isPresent()) {
            return DtoConverter.buildLoanDto(loan.get());
         }throw new LoanNotFoundException("loan details not found");
-   //return loanRepository.findById(id).orElseThrow(()->new LoanNotFoundException("loan details not found"));
     }
 
     @Override
