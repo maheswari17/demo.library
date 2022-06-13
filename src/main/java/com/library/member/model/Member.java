@@ -1,4 +1,5 @@
 package com.library.member.model;
+import com.library.member.dto.MemberDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @Entity
 @Table(name = "member")
-public class Member {
+public class Member extends MemberDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memberId;
