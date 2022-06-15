@@ -1,11 +1,12 @@
-package com.library.member.dto;
+package com.library.member;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.library.member.dto.MemberDto;
 import org.junit.jupiter.api.Test;
 
 class MemberDtoTest {
- 
+
     @Test
     void testConstructor() {
         MemberDto actualMemberDto = new MemberDto();

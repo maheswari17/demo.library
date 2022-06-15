@@ -1,9 +1,10 @@
-package com.library.member.controller;
+package com.library.member;
 
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.library.member.controller.MemberController;
 import com.library.member.dto.MemberDto;
 import com.library.member.service.MemberServiceImpl;
 import java.util.ArrayList;
