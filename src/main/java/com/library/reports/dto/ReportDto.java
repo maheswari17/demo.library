@@ -1,0 +1,14 @@
+package com.library.reports.dto;
+import lombok.Getter;
+import lombok.Setter;
+import java.time.LocalDate;
+
+@Getter
+@Setter
+public class ReportDto {
+    private long regNo;
+    private int userId;
+    private LocalDate issueDate;
+
+
+}

@@ -1,4 +1,4 @@
-package com.library.book.model;
+package com.library.publisher.model;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,25 +6,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "book")
-public class Book   {
-
+@Entity
+@Table(name = "publisher")
+public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long publisherId;
     @NotNull
-    private long bookId;
-    @NotNull
-    private String bookTitle;
-    @NotNull
-    private String author;
-    @NotNull
-    private int edition;
-    @NotNull
-    private int price;
+    private String publisherName;
+    private long publishingYear;
+
 
 }

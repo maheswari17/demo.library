@@ -67,7 +67,6 @@ class MemberControllerTest {
     @Test
     void testAdd() throws Exception {
         when(this.memberServiceImpl.getAllMembers()).thenReturn(new ArrayList<>());
-
         MemberDto memberDto = new MemberDto();
         memberDto.setContactNo(9911223344L);
         memberDto.setDepartment("ece");

@@ -9,8 +9,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/members")
 public class MemberController {
-    MemberServiceImpl memberService;
-
+   private MemberServiceImpl memberService;
     public MemberController(MemberServiceImpl memberService) {
         this.memberService = memberService;
     }

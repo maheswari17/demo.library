@@ -3,7 +3,8 @@ import com.library.loan.dto.LoanDto;
 import com.library.loan.repository.LoanRepository;
 import com.library.exceptions.CustomNotFoundException.LoanNotFoundException;
 import com.library.loan.model.Loan;
-import com.library.utils.DtoConverter;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,32 +16,34 @@ import java.util.stream.Collectors;
 @Service
 public class LoanServiceImpl implements LoanService {
 
-    LoanRepository loanRepository;
+   private LoanRepository loanRepository;
     EntityManager entityManager;
+    private ModelMapper modelMapper;
 
-    public LoanServiceImpl(LoanRepository loanRepository,EntityManager entityManager) {
+    public LoanServiceImpl(LoanRepository loanRepository,EntityManager entityManager,ModelMapper modelMapper) {
         this.loanRepository = loanRepository;
         this.entityManager=entityManager;
+        this.modelMapper=modelMapper;
     }
 
     public List<LoanDto> getAllMembersBook() {
-        return loanRepository.findAll().stream().map(DtoConverter::buildLoanDto).collect(Collectors.toList());
+        return loanRepository.findAll().stream().map(this::buildLoanDto).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public LoanDto saveLoan(LoanDto loanDto) {
-        Loan loan= loanRepository.saveAndFlush(DtoConverter.buildLoan(loanDto));
+        Loan loan= loanRepository.saveAndFlush(buildLoan(loanDto));
         entityManager.refresh(loan);
         System.out.println(loan);
-        return DtoConverter.buildLoanDto(loan);
+        return buildLoanDto(loan);
     }
 
     @Override
     public LoanDto getLoan(Long id) {
        Optional<Loan> loan = loanRepository.findById(id);
         if(loan.isPresent()) {
-           return DtoConverter.buildLoanDto(loan.get());
+           return buildLoanDto(loan.get());
         }throw new LoanNotFoundException("loan details not found");
     }
 
@@ -53,5 +56,15 @@ public class LoanServiceImpl implements LoanService {
         }
     }
 
+    public LoanDto buildLoanDto(Loan loan)   {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        LoanDto loanDto = modelMapper.map(loan,LoanDto.class);
+        return loanDto;
+    }
 
+    public Loan buildLoan(LoanDto loanDto)  {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        Loan loan = modelMapper.map(loanDto,Loan.class);
+        return loan;
+    }
 }

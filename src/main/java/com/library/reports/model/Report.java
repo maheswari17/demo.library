@@ -1,30 +1,25 @@
-package com.library.book.model;
+package com.library.reports.model;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "book")
-public class Book   {
-
+@Table(name = "report")
+public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
-    private long bookId;
+    private long regNo;
     @NotNull
-    private String bookTitle;
+    private int userId;
     @NotNull
-    private String author;
-    @NotNull
-    private int edition;
-    @NotNull
-    private int price;
-
+    private LocalDate issueDate;
 }

@@ -1,7 +1,5 @@
 package com.library.loan.service;
 import com.library.loan.dto.LoanDto;
-import com.library.loan.model.Loan;
-
 import java.util.List;
 
 public interface LoanService {

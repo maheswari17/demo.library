@@ -1,4 +1,4 @@
-package com.library.book.model;
+package com.library.authentication.model;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,20 +11,12 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "book")
-public class Book   {
-
+@Table(name = "authentication")
+public class Authentication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
-    private long bookId;
+    private long loginId;
     @NotNull
-    private String bookTitle;
-    @NotNull
-    private String author;
-    @NotNull
-    private int edition;
-    @NotNull
-    private int price;
-
+    private String password;
 }

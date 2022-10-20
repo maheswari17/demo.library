@@ -3,7 +3,8 @@ import com.library.exceptions.CustomNotFoundException.MemberNotFoundException;
 import com.library.member.dto.MemberDto;
 import com.library.member.model.Member;
 import com.library.member.repository.MemberRepository;
-import com.library.utils.DtoConverter;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,28 +13,30 @@ import java.util.stream.Collectors;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-    public MemberRepository memberRepository;
+    private MemberRepository memberRepository;
+    private ModelMapper modelMapper;
 
-    public MemberServiceImpl(MemberRepository memberRepository) {
+    public MemberServiceImpl(MemberRepository memberRepository,ModelMapper modelMapper) {
         this.memberRepository = memberRepository;
+        this.modelMapper=modelMapper;
     }
 
     @Override
     public List<MemberDto> getAllMembers() {
-        return memberRepository.findAll().stream().map(DtoConverter::buildMemberDto).collect(Collectors.toList());
+        return memberRepository.findAll().stream().map(this::buildMemberDto).collect(Collectors.toList());
     }
 
     @Override
     public MemberDto saveMember(MemberDto memberDto) {
-       Member member= memberRepository.save(DtoConverter.buildMember(memberDto));
-        return DtoConverter.buildMemberDto(member);
+       Member member= memberRepository.save(buildMember(memberDto));
+        return buildMemberDto(member);
     }
 
     @Override
     public MemberDto getMember(long id) {
         Optional<Member> member = memberRepository.findById(id);
         if(member.isPresent()) {
-            return DtoConverter.buildMemberDto(member.get());
+            return buildMemberDto(member.get());
         }throw new MemberNotFoundException("member details not found");
     }
 
@@ -46,5 +49,16 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    public MemberDto buildMemberDto(Member member)   {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        MemberDto memberDto = modelMapper.map(member,MemberDto.class);
+        return memberDto;
+   }
+
+    public Member buildMember(MemberDto memberDto)  {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        Member member = modelMapper.map(memberDto,Member.class);
+        return member;
+   }
 
 }

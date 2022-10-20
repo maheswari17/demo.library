@@ -3,7 +3,6 @@ import com.library.book.model.Book;
 import com.library.member.model.Member;
 import com.sun.istack.NotNull;
 import lombok.*;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -39,8 +38,6 @@ public class Loan  {
     public Book getBook() {
         return book;
     }
-
-
     public Member getMember() {
         return member;
     }
