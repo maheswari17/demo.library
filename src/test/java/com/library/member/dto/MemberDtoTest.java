@@ -1,4 +1,4 @@
-package com.library.member;
+package com.library.member.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

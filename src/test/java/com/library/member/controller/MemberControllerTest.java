@@ -1,4 +1,4 @@
-package com.library.member;
+package com.library.member.controller;
 
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.doNothing;

@@ -1,4 +1,4 @@
-package com.library.book;
+package com.library.book.dto;
 import com.library.book.dto.BookDto;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
